@@ -192,6 +192,7 @@
             <button id="searchButton" disabled>Search</button>
             <button id="printButton" disabled>Print Results</button>
             <button id="generateButton">New e-Card</button>
+            <button id="existingButton">Existing e-Cards</button>
             <button id="englishConstitution">Constitution (English)</button>
             <button id="urduConstitution">Constitution (اردو)</button>
         </div>
@@ -208,6 +209,7 @@
         const searchButton = document.getElementById('searchButton');
         const printButton = document.getElementById('printButton');
         const generateButton = document.getElementById('generateButton');
+        const existingButton = document.getElementById('existingButton');
         const englishConstitutionButton = document.getElementById('englishConstitution');
         const urduConstitutionButton = document.getElementById('urduConstitution');
         const resultContainer = document.getElementById('resultContainer');
@@ -419,7 +421,6 @@
 { name: "Mudassir Shah Muhammad Shah", Desg: "Committee Member", CNo: "746-210-204", BG: "B+", mobile: "+971525962447", Status: "Active", Room: "Room - (-)", Issue: "18-09-2025" },
 { name: "Abdul Waheed Muhammad Yaqoob", Desg: "Committee Member", CNo: "746-210-205", BG: "O+", mobile: "+971567135913", Status: "Active", Room: "Room - (-)", Issue: "13-10-2025" },
 { name: "Tajid Hussain Said Nawab Khan", Desg: "Committee Member", CNo: "746-210-206", BG: "B+", mobile: "+923314526919", Status: "Active", Room: "Room - (-)", Issue: "24-01-2025" },
-
         ];
 
         let sortedData = [...data];
@@ -494,8 +495,13 @@
             setTimeout(() => window.print(), 100);
         });
         generateButton.addEventListener('click', () => {
-            window.location.href = 'http://127.0.0.1:5000/';  // Redirect to the new URL
+            window.location.href = 'http://127.0.0.1:5000/';
         });
+
+        existingButton.addEventListener('click', () => {
+            window.location.href = 'existing.html';
+        });
+
         englishConstitutionButton.addEventListener('click', () => {
             window.open('English.pdf', '_blank');
         });
