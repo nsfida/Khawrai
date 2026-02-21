@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Khawrai Falahi Committee UAE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Calibri', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #416ba5;
+            padding: 20px;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-title img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-title h2 {
+            font-size: 22px;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .uae-text {
+            font-size: 18px;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card-item {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .card-item:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+
+        .card-item iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #1976d2;
+            word-break: break-word;
+        }
+
+        .back-btn {
+            margin-bottom: 20px;
+            background-color: #1976d2;
+            color: white;
+            padding: 6px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .back-btn:hover {
+            background-color: #125fa6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #555;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        footer a {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-title">
+        <img src="logo.png" alt="Logo">
+        <div>
+            <h2>Khawrai Falahi Committee UAE</h2>
+            <p class="uae-text">خاورئی فلاحی کمیٹی متحدہ عرب امارات</p>
+        </div>
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='index.html'">Back</button>
+
+    <div class="cards-container" id="cardsContainer"></div>
+
+    <footer>
+        <p>Powered by <a href="https://www.facebook.com/nadeemshahzadfida" target="_blank">Nadeem Shahzad Fida</a></p>
+    </footer>
+
+<script>
+    const container = document.getElementById("cardsContainer");
+
+    fetch("e-Cards/cards.json")
+        .then(response => response.json())
+        .then(files => {
+            files.forEach(fileName => {
+                const fullPath = "e-Cards/" + fileName;
+
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card-item";
+                cardDiv.onclick = () => {
+                    window.open(fullPath, "_blank");
+                };
+
+                cardDiv.innerHTML = `
+                    <iframe src="${fullPath}#toolbar=0"></iframe>
+                    <div class="file-name">${fileName}</div>
+                `;
+
+                container.appendChild(cardDiv);
+            });
+        })
+        .catch(() => {
+            container.innerHTML = "<p style='color:red;'>Unable to load e-Cards list.</p>";
+        });
+</script>
+
+</body>
+</html>
