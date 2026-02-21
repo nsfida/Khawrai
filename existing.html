@@ -73,6 +73,7 @@
             height: 250px;
             border: none;
             border-radius: 8px;
+            background: white;
         }
 
         .file-name {
@@ -115,6 +116,12 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -132,20 +139,36 @@
     <div class="cards-container" id="cardsContainer"></div>
 
     <footer>
-        <p>Powered by <a href="https://www.facebook.com/nadeemshahzadfida" target="_blank">Nadeem Shahzad Fida</a></p>
+        <p>Powered by 
+            <a href="https://www.facebook.com/nadeemshahzadfida" target="_blank">
+                Nadeem Shahzad Fida
+            </a>
+        </p>
     </footer>
 
 <script>
     const container = document.getElementById("cardsContainer");
 
     fetch("e-Cards/cards.json")
-        .then(response => response.json())
-        .then(files => {
-            files.forEach(fileName => {
-                const fullPath = "e-Cards/" + fileName;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("JSON not found");
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            if (!data.file_names || !Array.isArray(data.file_names)) {
+                throw new Error("Invalid JSON format");
+            }
+
+            data.file_names.forEach(fileName => {
+
+                const fullPath = "e-Cards/" + encodeURIComponent(fileName);
 
                 const cardDiv = document.createElement("div");
                 cardDiv.className = "card-item";
+
                 cardDiv.onclick = () => {
                     window.open(fullPath, "_blank");
                 };
@@ -157,9 +180,11 @@
 
                 container.appendChild(cardDiv);
             });
+
         })
-        .catch(() => {
-            container.innerHTML = "<p style='color:red;'>Unable to load e-Cards list.</p>";
+        .catch(error => {
+            console.error(error);
+            container.innerHTML = "<p class='error'>Unable to load e-Cards list.</p>";
         });
 </script>
 
